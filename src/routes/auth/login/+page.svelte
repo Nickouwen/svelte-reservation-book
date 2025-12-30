@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+	import { afterNavigate, goto, invalidateAll } from "$app/navigation";
 	import { resolve } from "$app/paths";
 	import { authClient } from "$lib/client";
-
 
     let error = $state("");
 
@@ -27,6 +26,7 @@
             },
             {
                 onSuccess: () => {
+                    error = "";
                     goto(resolve("/"));
                 }
             }
@@ -35,7 +35,7 @@
 
 </script>
 
-<div class="flex flex-col items-center justify-center w-full h-screen">
+<div class="flex flex-col flex-grow items-center justify-center">
     <form onsubmit={login}>
         <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
             <legend class="fieldset-legend">Login</legend>
@@ -52,6 +52,8 @@
 
             <br />
             <button class="btn btn-primary" type="submit">Login</button>
+            
+            <p class="label">Don't have an account? <a class="link" href={resolve("/auth/signup")}>Sign Up</a></p>
         </fieldset>
     </form>
 </div>

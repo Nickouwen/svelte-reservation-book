@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+	import { afterNavigate, goto, invalidateAll } from "$app/navigation";
 	import { authClient } from "$lib/client";
 	import { resolve } from "$app/paths";
-
 
     let error = $state("");
 
@@ -35,6 +34,7 @@
             },
             {
                 onSuccess: async () => {
+                    error = "";
                     goto(resolve("/"));
                 }
             }
@@ -65,6 +65,8 @@
                 <p class="text-error">{error}</p>
             {/if}
             <button class="btn btn-primary" type="submit">Sign Up</button>
+
+            <p class="label">Already have an account? <a class="link" href={resolve("/auth/login")}>Login</a></p>
         </fieldset>
     </form>
 </div>
